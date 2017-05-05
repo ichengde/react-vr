@@ -39,6 +39,8 @@ export default class BasicVideoPlayer {
   constructor() {
     this.videoElement = document.createElement('video');
     this.videoElement.style.display = 'none';
+    this.videoElement.setAttribute("x5-video-player-type", "h5")
+    this.videoElement.setAttribute("x5-video-player-fullscreen", "true");
     if (document.body) {
       document.body.appendChild(this.videoElement);
     }
