@@ -85,6 +85,7 @@ export default class DeviceOrientationControls {
     const gamma = THREE.Math.degToRad(event.gamma);
     if (this._initialAlpha === null) {
       this._initialAlpha = alpha - getScreenOrientation();
+      this._touchAlpha = this._initialAlpha;
     }
     this.deviceOrientation.alpha = alpha;
     this.deviceOrientation.beta = beta;
@@ -93,6 +94,7 @@ export default class DeviceOrientationControls {
 
   resetRotation(x, y, z) {
     // No-op
+      this._touchAlpha = this._initialAlpha + y;
   }
 
   update() {
@@ -109,7 +111,7 @@ export default class DeviceOrientationControls {
     euler.set(beta, alpha, -gamma, 'YXZ');
     quaternion.setFromEuler(euler);
     if (this._initialAlpha !== null) {
-      rotation.setFromAxisAngle(Y_UNIT, -this._initialAlpha);
+      rotation.setFromAxisAngle(Y_UNIT, -this._touchAlpha);
       quaternion.premultiply(rotation);
     }
     quaternion.multiply(SCREEN_ROTATION); // rotate from device top to a screen normal
